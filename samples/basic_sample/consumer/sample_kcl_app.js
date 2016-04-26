@@ -36,21 +36,30 @@ function recordProcessor() {
   return {
 
     initialize: function(initializeInput, completeCallback) {
+      log.info("=========================initialize=======================");
       shardId = initializeInput.shardId;
 
       completeCallback();
     },
 
     processRecords: function(processRecordsInput, completeCallback) {
+      log.info("====================processRecordsInput================");
+      log.info(processRecordsInput);
       if (!processRecordsInput || !processRecordsInput.records) {
         completeCallback();
         return;
       }
       var records = processRecordsInput.records;
+      log.info("====================Records================");
+      log.info(records);
       var record, data, sequenceNumber, partitionKey;
       for (var i = 0 ; i < records.length ; ++i) {
         record = records[i];
+        log.info("====================Record================");
+        log.info(record);
         data = new Buffer(record.data, 'base64').toString();
+        log.info("====================data================");
+        log.info(data);
         sequenceNumber = record.sequenceNumber;
         partitionKey = record.partitionKey;
         log.info(util.format('ShardID: %s, Record: %s, SeqenceNumber: %s, PartitionKey:%s', shardId, data, sequenceNumber, partitionKey));
