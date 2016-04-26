@@ -53,7 +53,7 @@ function recordProcessor() {
         record = records[i];
         data = new Buffer(record.data, 'base64').toString();
         log.info("====================data================");
-        data2 = JSON.parse(data);
+        var data2 = JSON.parse(data);
         log.info(data2.time);
         log.info(data2.reading);
         sequenceNumber = record.sequenceNumber;
