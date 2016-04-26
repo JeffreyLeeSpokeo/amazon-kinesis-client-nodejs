@@ -98,12 +98,6 @@ function startKinesisClientLibraryApplication(options) {
   console.log("==========================================================");
   console.log(cmd);
   console.log("==========================================================");
-  console.log(options);
-  console.log("==========================================================");
-  console.log(args);
-  console.log("==========================================================");
-  console.log(classpath);
-  console.log("==========================================================");
   if (options.execute) {
     console.log("Starting Multi-Lang Daemon ...");
     spawn(java, args, { stdio: 'inherit' });
