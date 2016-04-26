@@ -54,8 +54,8 @@ function recordProcessor() {
         data = new Buffer(record.data, 'base64').toString();
         log.info("====================data================");
         log.info(data);
-        var stuff = {timeStamp: data.time, reading: data.reading}
-        log.info(stuff);
+        log.info(data.time);
+        log.info(data.reading);
         sequenceNumber = record.sequenceNumber;
         partitionKey = record.partitionKey;
         log.info(util.format('ShardID: %s, Record: %s, SeqenceNumber: %s, PartitionKey:%s', shardId, data, sequenceNumber, partitionKey));
