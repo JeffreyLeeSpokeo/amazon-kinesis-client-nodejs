@@ -51,10 +51,11 @@ function recordProcessor() {
       var record, data, sequenceNumber, partitionKey;
       for (var i = 0 ; i < records.length ; ++i) {
         record = records[i];
-        data = new Buffer(record.data, 'base64');
+        data = new Buffer(record.data, 'base64').toString();
         log.info("====================data================");
-        log.info(data.time);
-        log.info(data.reading);
+        data2 = JSON.parse(data);
+        log.info(data2.time);
+        log.info(data2.reading);
         sequenceNumber = record.sequenceNumber;
         partitionKey = record.partitionKey;
         log.info(util.format('ShardID: %s, Record: %s, SeqenceNumber: %s, PartitionKey:%s', shardId, data, sequenceNumber, partitionKey));
