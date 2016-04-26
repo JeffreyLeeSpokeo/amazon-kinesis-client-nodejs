@@ -54,6 +54,7 @@ function recordProcessor() {
         data = new Buffer(record.data, 'base64').toString();
         log.info("====================data================");
         log.info(data);
+        log.info(typeof(data));
         log.info(data["time"]);
         log.info(data["reading"]);
         sequenceNumber = record.sequenceNumber;
