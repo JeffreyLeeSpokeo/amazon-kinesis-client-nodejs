@@ -60,7 +60,10 @@ function recordProcessor() {
         record = records[i];
         data = new Buffer(record.data, 'base64').toString();
         log.info("====================data================");
+        log.info(data);
+        log.info(typeof(data));
         var data_json = JSON.parse(data);
+        log.info(JSON.stringify(data_json));
 
         var redis_data = JSON.stringify({
           timeStamp: data_json.time,
