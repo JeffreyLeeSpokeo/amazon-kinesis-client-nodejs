@@ -26,9 +26,9 @@ var redis = require("redis")
 var redisClient = redis.createClient(6379, 'jeffredis.yljwlc.0001.usw2.cache.amazonaws.com');
 
 
-redisClient.on("error", function (err) {
-    console.log("Error " + err);
-});
+// redisClient.on("error", function (err) {
+//   console.log("Error " + err);
+// });
 /**
  * A simple implementation for the record processor (consumer) that simply writes the data to a log file.
  *
@@ -68,7 +68,10 @@ function recordProcessor() {
         }
         log.info(redis_data);
         redisClient.set("123", redis_data);
-        var test = redisClient.get("123", redis.print);
+        var test = redisClient.get("123", function(err, reply)
+          log.info(reply);
+          log.info(JSON.parse(reply));
+        );
         log.info("=====================redis==================");
         log.info(JSON.parse(test));
         sequenceNumber = record.sequenceNumber;
