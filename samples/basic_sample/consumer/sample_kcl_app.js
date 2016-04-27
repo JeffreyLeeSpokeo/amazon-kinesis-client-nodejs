@@ -21,6 +21,8 @@ var path = require('path');
 var util = require('util');
 var kcl = require('../../..');
 var logger = require('../../util/logger');
+var aws = require('aws-sdk');
+var redisClient = require("redis").createClient(6379, 'jeffredis.yljwlc.0001.usw2.cache.amazonaws.com');
 
 /**
  * A simple implementation for the record processor (consumer) that simply writes the data to a log file.
@@ -53,9 +55,13 @@ function recordProcessor() {
         record = records[i];
         data = new Buffer(record.data, 'base64').toString();
         log.info("====================data================");
-        var data2 = JSON.parse(data);
-        log.info(data2.time);
-        log.info(data2.reading);
+        var data_json = JSON.parse(data);
+        var redis_data = {
+          timeStamp: data_json.time,
+          data: data_json.reading
+        }
+        redisClient.set("123", redis_data);
+        var test = redisClient.get("123");
         sequenceNumber = record.sequenceNumber;
         partitionKey = record.partitionKey;
         log.info(util.format('ShardID: %s, Record: %s, SeqenceNumber: %s, PartitionKey:%s', shardId, data, sequenceNumber, partitionKey));
