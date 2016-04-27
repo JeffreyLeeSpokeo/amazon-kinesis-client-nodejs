@@ -71,7 +71,7 @@ function recordProcessor() {
         var test = redisClient.get("123", function(err, reply) {
             log.info(reply.timeStamp);
             log.info(reply.data);
-            log.info(JSON.parse(reply));
+            log.info(reply);
           }
         );
         log.info("=====================redis==================");
