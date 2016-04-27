@@ -62,19 +62,18 @@ function recordProcessor() {
         log.info("====================data================");
         var data_json = JSON.parse(data);
 
-        var redis_data = {
+        var redis_data = JSON.stringify({
           timeStamp: data_json.time,
           data: data_json.reading
-        }
+        });
         log.info(redis_data);
-        redisClient.set("123", JSON.stringify(redis_data));
+        redisClient.set("123", redis_data);
         var test = redisClient.get("123", function(err, reply) {
+            log.info("=====================redis==================");
             log.info("fuck me");
             log.info(JSON.parse(reply));
           }
         );
-        log.info("=====================redis==================");
-        log.info(JSON.parse(test));
         sequenceNumber = record.sequenceNumber;
         partitionKey = record.partitionKey;
         log.info(util.format('ShardID: %s, Record: %s, SeqenceNumber: %s, PartitionKey:%s', shardId, data, sequenceNumber, partitionKey));
