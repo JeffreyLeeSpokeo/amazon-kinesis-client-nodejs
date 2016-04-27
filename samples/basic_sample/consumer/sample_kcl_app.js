@@ -69,7 +69,7 @@ function recordProcessor() {
         log.info(redis_data);
         redisClient.set("123", redis_data);
         var test = redisClient.get("123", function(err, reply) {
-            log.info(reply);
+            log.info(JSON.parse(reply));
           }
         );
         log.info("=====================redis==================");
