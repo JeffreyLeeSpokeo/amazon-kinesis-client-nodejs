@@ -69,9 +69,8 @@ function recordProcessor() {
         log.info(redis_data);
         redisClient.set("123", redis_data);
         var test = redisClient.get("123", function(err, reply) {
-            log.info(reply.timeStamp);
-            log.info(reply.data);
-            log.info(reply);
+            log.info("fuck me");
+            log.info(reply.toString());
           }
         );
         log.info("=====================redis==================");
