@@ -65,7 +65,7 @@ function recordProcessor() {
         var redis_data = {
           timeStamp: data_json.time,
           data: data_json.reading
-        }
+        }.toString();
         log.info(redis_data);
         redisClient.set("123", redis_data);
         var test = redisClient.get("123", function(err, reply) {
