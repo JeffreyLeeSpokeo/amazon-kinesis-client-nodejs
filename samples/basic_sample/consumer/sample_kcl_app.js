@@ -25,6 +25,10 @@ var aws = require('aws-sdk');
 var redis = require("redis")
 var redisClient = redis.createClient(6379, 'jeffredis.yljwlc.0001.usw2.cache.amazonaws.com');
 
+
+redisClient.on("error", function (err) {
+    console.log("Error " + err);
+});
 /**
  * A simple implementation for the record processor (consumer) that simply writes the data to a log file.
  *
@@ -62,6 +66,7 @@ function recordProcessor() {
           timeStamp: data_json.time,
           data: data_json.reading
         }.to_json
+        log.info(redis_data);
         redisClient.set("123", redis_data);
         var test = redisClient.get("123", redis.print);
         log.info("=====================redis==================");
