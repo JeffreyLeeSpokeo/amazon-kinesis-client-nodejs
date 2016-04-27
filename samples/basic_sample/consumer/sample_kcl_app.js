@@ -22,7 +22,8 @@ var util = require('util');
 var kcl = require('../../..');
 var logger = require('../../util/logger');
 var aws = require('aws-sdk');
-var redisClient = require("redis").createClient(6379, 'jeffredis.yljwlc.0001.usw2.cache.amazonaws.com');
+var redis = require("redis")
+var redisClient = redis.createClient(6379, 'jeffredis.yljwlc.0001.usw2.cache.amazonaws.com');
 
 /**
  * A simple implementation for the record processor (consumer) that simply writes the data to a log file.
@@ -61,7 +62,7 @@ function recordProcessor() {
           data: data_json.reading
         }
         redisClient.set("123", redis_data);
-        var test = redisClient.get("123");
+        var test = redisClient.get("123", redis.print);
         log.info("=====================redis==================");
         log.info(test);
         sequenceNumber = record.sequenceNumber;
