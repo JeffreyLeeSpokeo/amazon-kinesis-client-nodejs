@@ -62,6 +62,8 @@ function recordProcessor() {
         }
         redisClient.set("123", redis_data);
         var test = redisClient.get("123");
+        log.info("=====================redis==================");
+        log.info(test);
         sequenceNumber = record.sequenceNumber;
         partitionKey = record.partitionKey;
         log.info(util.format('ShardID: %s, Record: %s, SeqenceNumber: %s, PartitionKey:%s', shardId, data, sequenceNumber, partitionKey));
