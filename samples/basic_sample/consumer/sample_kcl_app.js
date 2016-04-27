@@ -67,10 +67,10 @@ function recordProcessor() {
           data: data_json.reading
         }
         log.info(redis_data);
-        redisClient.set("123", "blue");
+        redisClient.set("123", redis_data);
         var test = redisClient.get("123", redis.print);
         log.info("=====================redis==================");
-        log.info(test);
+        log.info(JSON.parse(test));
         sequenceNumber = record.sequenceNumber;
         partitionKey = record.partitionKey;
         log.info(util.format('ShardID: %s, Record: %s, SeqenceNumber: %s, PartitionKey:%s', shardId, data, sequenceNumber, partitionKey));
