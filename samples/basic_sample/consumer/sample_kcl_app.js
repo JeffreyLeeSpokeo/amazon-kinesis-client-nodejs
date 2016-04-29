@@ -61,11 +61,7 @@ function recordProcessor() {
         data = new Buffer(record.data, 'base64').toString();
 
         log.info("====================data================");
-        var data_json = JSON.parse(data);
-
-        var redis_data = JSON.stringify(data_json);
         log.info(data);
-        log.info(redis_data);
         redisClient.set("123", data);
         var test = redisClient.get("123", function(err, reply) {
             log.info("=====================redis==================");
@@ -74,10 +70,11 @@ function recordProcessor() {
         );
 
         log.info("===============firehose==================");
+        var data_json = JSON.parse(data);
         var firehose_data = {
           DeliveryStreamName: 'JeffFirehose',
           Record: {
-            Data: data_json
+            Data: data
           }
         };
         log.info(firehose_data);
