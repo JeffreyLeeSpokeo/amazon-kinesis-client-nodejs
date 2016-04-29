@@ -24,11 +24,11 @@ var logger = require('../../util/logger');
 var aws = require('aws-sdk');
 var redis = require("redis")
 var redisClient = redis.createClient(6379, 'jeffredis.yljwlc.0001.usw2.cache.amazonaws.com');
+var firehose = new aws.Firehose({
+  apiVersion: '2015-08-04',
+  region : 'us-west-2'
+});
 
-
-// redisClient.on("error", function (err) {
-//   console.log("Error " + err);
-// });
 /**
  * A simple implementation for the record processor (consumer) that simply writes the data to a log file.
  *
@@ -59,6 +59,7 @@ function recordProcessor() {
       for (var i = 0 ; i < records.length ; ++i) {
         record = records[i];
         data = new Buffer(record.data, 'base64').toString();
+
         log.info("====================data================");
         var data_json = JSON.parse(data);
 
@@ -74,6 +75,21 @@ function recordProcessor() {
             log.info(JSON.parse(reply));
           }
         );
+
+        info.log("===============firehose==================");
+        var firehose_data = {
+          DeliveryStreamName: 'JeffFirehose',
+          Record: {
+            Data: data_json
+          }
+        };
+        firehose.putRecord(firehose_data, function(err, data){
+          info.log("Hosed my Redshift");
+          info.log(data);
+          info.log(JSON.parse);
+        });
+        info.log("==============everything should be done==============");
+
         sequenceNumber = record.sequenceNumber;
         partitionKey = record.partitionKey;
         log.info(util.format('ShardID: %s, Record: %s, SeqenceNumber: %s, PartitionKey:%s', shardId, data, sequenceNumber, partitionKey));
