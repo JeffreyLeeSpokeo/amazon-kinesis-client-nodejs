@@ -71,10 +71,12 @@ function recordProcessor() {
 
         log.info("===============firehose==================");
         var data_json = JSON.parse(data);
+        var firehose_data = data_json.time + '|' + data_json.sensor + '|' + data_json.call_type + '|' + data_json.apikey + '\n';
+        log.info(firehose_data);
         var firehose_data = {
           DeliveryStreamName: 'JeffFirehose',
           Record: {
-            Data: data
+            Data: firehose_data
           }
         };
         log.info(firehose_data);
