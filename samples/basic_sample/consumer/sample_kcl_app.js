@@ -82,7 +82,6 @@ function recordProcessor() {
           log.info("Hosed my Redshift");
           log.info(err);
           log.info(data);
-          log.info(JSON.parse(data));
         });
         log.info("==============everything should be done==============");
 
