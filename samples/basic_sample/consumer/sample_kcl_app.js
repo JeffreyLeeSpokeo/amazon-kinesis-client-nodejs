@@ -63,11 +63,7 @@ function recordProcessor() {
         log.info("====================data================");
         var data_json = JSON.parse(data);
 
-        var redis_data = JSON.stringify({
-          timeStamp: data_json.time,
-          call_type: data_json.call_type,
-          apikey: data_json.apikey
-        });
+        var redis_data = JSON.stringify(data_json);
         log.info(redis_data);
         redisClient.set("123", redis_data);
         var test = redisClient.get("123", function(err, reply) {
@@ -83,10 +79,11 @@ function recordProcessor() {
             Data: data_json
           }
         };
+        log.info(firehose_data);
         firehose.putRecord(firehose_data, function(err, data){
           log.info("Hosed my Redshift");
           log.info(data);
-          log.info(JSON.parse);
+          log.info(JSON.parse(data));
         });
         log.info("==============everything should be done==============");
 
