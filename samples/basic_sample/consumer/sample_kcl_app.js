@@ -76,7 +76,7 @@ function recordProcessor() {
           }
         );
 
-        info.log("===============firehose==================");
+        log.info("===============firehose==================");
         var firehose_data = {
           DeliveryStreamName: 'JeffFirehose',
           Record: {
@@ -84,11 +84,11 @@ function recordProcessor() {
           }
         };
         firehose.putRecord(firehose_data, function(err, data){
-          info.log("Hosed my Redshift");
-          info.log(data);
-          info.log(JSON.parse);
+          log.info("Hosed my Redshift");
+          log.info(data);
+          log.info(JSON.parse);
         });
-        info.log("==============everything should be done==============");
+        log.info("==============everything should be done==============");
 
         sequenceNumber = record.sequenceNumber;
         partitionKey = record.partitionKey;
