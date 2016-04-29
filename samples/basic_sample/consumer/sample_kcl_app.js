@@ -74,7 +74,7 @@ function recordProcessor() {
         var firehose_data = {
           DeliveryStreamName: 'JeffFirehose',
           Record: {
-            Data: data_json
+            Data: data
           }
         };
         log.info(firehose_data);
