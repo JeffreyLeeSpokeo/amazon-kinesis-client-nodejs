@@ -66,7 +66,7 @@ function recordProcessor() {
         var redis_data = JSON.stringify(data_json);
         log.info(data);
         log.info(redis_data);
-        redisClient.set("123", redis_data);
+        redisClient.set("123", data);
         var test = redisClient.get("123", function(err, reply) {
             log.info("=====================redis==================");
             log.info(JSON.parse(reply));
