@@ -61,18 +61,18 @@ function recordProcessor() {
         data = new Buffer(record.data, 'base64').toString();
 
         log.info("====================data================");
-        log.info(data);
+        log.info("data:" + data);
         redisClient.set("123", data);
         var test = redisClient.get("123", function(err, reply) {
             log.info("=====================redis==================");
-            log.info(JSON.parse(reply));
+            log.info("redis response" + JSON.parse(reply));
           }
         );
 
         log.info("===============firehose==================");
         var data_json = JSON.parse(data);
         var firehose_data = data_json.time + '|' + data_json.sensor + '|' + data_json.call_type + '|' + data_json.apikey + '\n';
-        log.info(firehose_data);
+        log.info("firehose data:" + firehose_data);
         var firehose_data = {
           DeliveryStreamName: 'JeffFirehose',
           Record: {
@@ -82,8 +82,8 @@ function recordProcessor() {
         log.info(firehose_data);
         firehose.putRecord(firehose_data, function(err, data){
           log.info("Hosed my Redshift");
-          log.info(err);
-          log.info(data);
+          log.info("error:" + err);
+          log.info("after data:" + data);
         });
         log.info("==============everything should be done==============");
 
